@@ -20,6 +20,7 @@ global class RESTResponseWrappers {
         }
 
         global PatientWrapper(Visit__c visit) {
+            id = visit.Patient__c;
             firstName = visit.Patient__r.First_Name__c;
             lastName = visit.Patient__r.Last_Name__c;
             phoneNumber = visit.Patient__r.Phone_Number__c;
@@ -41,7 +42,6 @@ global class RESTResponseWrappers {
 
     global class VisitWrapper {
         public Id id;
-        public Id patientId;
         public Datetime startTime;
         public Datetime endTime;
         public String status;
@@ -49,7 +49,6 @@ global class RESTResponseWrappers {
 
         global VisitWrapper(Visit__c visit) {
             id = visit.Id;
-            patientId = visit.Patient__c;
             startTime = visit.Start_Time__c;
             endTime = visit.End_Time__c;
             status = visit.Status__c;
