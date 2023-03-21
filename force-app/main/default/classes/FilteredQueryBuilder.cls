@@ -1,10 +1,12 @@
 public without sharing class FilteredQueryBuilder {
     private Map<String, String> params;
-    private SortType sortType;
+    private String sortType;
+    private String sortField;
     private String fields;
     private String sObjectType;
     private String limitValue;
     private String offset;
+    private String whereField;
 
     public FilteredQueryBuilder setParams(Map<String, String> params) {
         this.params = params;
@@ -16,8 +18,18 @@ public without sharing class FilteredQueryBuilder {
         return this;
     }
 
-    public FilteredQueryBuilder setSortType(SortType sortType) {
+    public FilteredQueryBuilder setSortType(String sortType) {
         this.sortType = sortType;
+        return this;
+    }
+
+    public FilteredQueryBuilder setSortField(String sortField) {
+        this.sortField = sortField;
+        return this;
+    }
+
+    public FilteredQueryBuilder setWhereField(String whereField) {
+        this.whereField = whereField;
         return this;
     }
 
@@ -37,8 +49,8 @@ public without sharing class FilteredQueryBuilder {
     }
 
     public String buildSOQL() {
-        String query = 'SELECT {0} FROM {1}';
-        List<String> queryParams = new List<String> {this.fields, this.sObjectType};
+        String query = 'SELECT {0} FROM {1} {2} {3} {4}';
+        List<String> queryParams = new List<String> {this.fields, this.sObjectType, this.whereField != null ? 'WHERE ' + this.whereField : '', this.sortField != null ? 'ORDER BY ' + this.sortField : '', this.sortType != null ? this.sortType : ''};
 
         return String.format(query, queryParams);
     }
@@ -48,10 +60,5 @@ public without sharing class FilteredQueryBuilder {
         List<String> queryParams = new List<String> {'\'' + this.params.get('searchValue') + '*\'', this.sObjectType, this.fields};
 
         return String.format(query, queryParams);
-    }
-
-    public enum SortType {
-        ASCENDING,
-        DESCENDING
     }
 }

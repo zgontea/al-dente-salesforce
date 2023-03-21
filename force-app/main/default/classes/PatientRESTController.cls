@@ -11,6 +11,11 @@ global without sharing class PatientRESTController {
         List<SObject> queriedPatients = new List<SObject>();
         if (req.params.containsKey('searchValue')) {
             queriedPatients = Search.query(queryBuilder.buildSOSL())[0];
+        } else if (req.params.containsKey('id')) {
+            queriedPatients = [SELECT Id, First_Name__c, Last_Name__c, Gender__c, Birth_Date__c, PESEL__c, Phone_Number__c, (SELECT Id, Start_Time__c, End_Time__c, Status__c FROM Visits__r) FROM Patient__c WHERE Id = :req.params.get('id')];
+            RESTResponseWrappers.PatientInfoWrapper responseWrapper = new RESTResponseWrappers.PatientInfoWrapper((Patient__c) queriedPatients.get(0));
+            res.responseBody = Blob.valueOf(JSON.serializePretty(responseWrapper, true));
+            return;
         } else {
             queriedPatients = Database.query(queryBuilder.buildSOQL());
         }
@@ -33,11 +38,5 @@ global without sharing class PatientRESTController {
         insert patientWrapper.createPatientObject();
 
         res.statusCode = 201;
-    }
-
-    private static void setHeaders() {
-        RestResponse res = RestContext.response;
-        res.addHeader('Access-Control-Allow-Origin', '*');
-        res.addHeader('Content-Type', 'application/json');
     }
 }
