@@ -50,7 +50,7 @@ public without sharing class FilteredQueryBuilder {
 
     public String buildSOQL() {
         String query = 'SELECT {0} FROM {1} {2} {3} {4}';
-        List<String> queryParams = new List<String> {this.fields, this.sObjectType, this.whereField != null ? 'WHERE ' + this.whereField : '', this.sortField != null ? 'ORDER BY ' + this.sortField : '', this.sortType != null ? this.sortType : ''};
+        List<String> queryParams = new List<String> {this.fields, this.sObjectType, String.isNotBlank(this.whereField) ? 'WHERE ' + this.whereField : '', this.sortField != null ? 'ORDER BY ' + this.sortField : '', this.sortType != null ? this.sortType : ''};
 
         return String.format(query, queryParams);
     }
