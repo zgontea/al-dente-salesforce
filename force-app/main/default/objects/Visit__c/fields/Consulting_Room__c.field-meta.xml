@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Consulting_Room__c</fullName>
+    <externalId>false</externalId>
+    <label>Consulting Room</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CR-01</fullName>
+                <default>false</default>
+                <label>CR-01</label>
+            </value>
+            <value>
+                <fullName>CR-02</fullName>
+                <default>false</default>
+                <label>CR-02</label>
+            </value>
+            <value>
+                <fullName>CR-03</fullName>
+                <default>false</default>
+                <label>CR-03</label>
+            </value>
+            <value>
+                <fullName>CR-04</fullName>
+                <default>false</default>
+                <label>CR-04</label>
+            </value>
+            <value>
+                <fullName>CR-05</fullName>
+                <default>false</default>
+                <label>CR-05</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

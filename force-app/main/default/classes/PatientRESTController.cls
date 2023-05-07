@@ -35,7 +35,7 @@ global without sharing class PatientRESTController {
         RestResponse res = RestContext.response;
 
         RESTResponseWrappers.PatientWrapper patientWrapper = (RESTResponseWrappers.PatientWrapper) JSON.deserialize(req.requestBody.toString(), RESTResponseWrappers.PatientWrapper.class);
-        insert patientWrapper.createPatientObject();
+        upsert patientWrapper.createPatientObject();
 
         res.statusCode = 201;
     }

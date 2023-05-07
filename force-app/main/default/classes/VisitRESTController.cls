@@ -1,6 +1,6 @@
 @RestResource(urlMapping = '/Visit/*')
 global without sharing class VisitRESTController {
-    private static final String VISIT_FIELDS_TO_QUERY = 'Start_Time__c, End_Time__c, Status__c, Patient__c, Patient__r.First_Name__c, Patient__r.Last_Name__c, Patient__r.PESEL__c, Patient__r.Phone_Number__c';
+    private static final String VISIT_FIELDS_TO_QUERY = 'Consulting_Room__c, Start_Time__c, End_Time__c, Status__c, Patient__c, Patient__r.First_Name__c, Patient__r.Last_Name__c, Patient__r.PESEL__c, Patient__r.Phone_Number__c, Doctor__c, Doctor__r.Name';
 
     @HttpGet
     global static void getAll() {
@@ -34,10 +34,8 @@ global without sharing class VisitRESTController {
         RestResponse res = RestContext.response;
 
         RESTResponseWrappers.VisitWrapper visitWrapper = (RESTResponseWrappers.VisitWrapper) JSON.deserialize(req.requestBody.toString(), RESTResponseWrappers.VisitWrapper.class);
-        Visit__c visit = visitWrapper.createVisitObject();
-        visit.Patient__c = visitWrapper.patientId;
 
-        insert visit;
+        upsert visitWrapper.createVisitObject();
 
         res.statusCode = 201;
     }

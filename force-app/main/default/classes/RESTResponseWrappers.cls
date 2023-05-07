@@ -79,6 +79,9 @@ public class RESTResponseWrappers {
     public class VisitWrapper {
         public Id visitId;
         public Id patientId;
+        public Id doctorId;
+        public String doctorName;
+        public String consultingRoom;
         public String startTime;
         public String endTime;
         public String status;
@@ -93,6 +96,9 @@ public class RESTResponseWrappers {
         public VisitWrapper(Visit__c visit) {
             visitId = visit.Id;
             patientId = visit.Patient__c;
+            doctorId = visit.Doctor__c;
+            doctorName = visit.Doctor__r.Name;
+            consultingRoom = visit.Consulting_Room__c;
             startTime = getTime(visit.Start_Time__c);
             endTime = getTime(visit.End_Time__c);
             status = visit.Status__c;
@@ -104,9 +110,12 @@ public class RESTResponseWrappers {
 
         public Visit__c createVisitObject() {
             return new Visit__c(
+                Patient__c = patientId,
+                Doctor__c = doctorId,
                 Start_Time__c = Datetime.valueOf(startTime),
                 End_Time__c = Datetime.valueOf(endTime),
-                Status__c = status
+                Status__c = status,
+                Consulting_Room__c = consultingRoom
             );
         }
     }
@@ -127,5 +136,10 @@ public class RESTResponseWrappers {
 
     public static String getDateAndDay(Datetime dt) {
         return dt.year() + '-' + String.valueOf(dt.month()).leftPad(2, '0') + '-' + String.valueOf(dt.day()).leftPad(2, '0') + ' ' + dt.format('EEEE');
+    }
+
+    public static Datetime getDatetimeFromString(String value) {
+        List<String> selectedDayValues = value.split('-');
+        return Datetime.newInstance(Integer.valueOf(selectedDayValues[2]), Integer.valueOf(selectedDayValues[1].replaceFirst('^0+', '')), Integer.valueOf(selectedDayValues[0].replaceFirst('^0+', '')));
     }
 }

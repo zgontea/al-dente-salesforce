@@ -152,15 +152,14 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>Visit</label>
+    <externalSharingModel>Private</externalSharingModel>
+    <label>Doctor</label>
     <nameField>
-        <displayFormat>VISIT-{00000}</displayFormat>
-        <label>Visit Name</label>
-        <type>AutoNumber</type>
+        <label>Doctor Name</label>
+        <type>Text</type>
     </nameField>
-    <pluralLabel>Visits</pluralLabel>
+    <pluralLabel>Doctors</pluralLabel>
     <searchLayouts></searchLayouts>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
